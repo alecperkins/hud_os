@@ -169,7 +169,7 @@ def renderGraphic (data, color=None):
                 fill: black;
             }"""
     elif color == 'black':
-        ref_box = '<rect x="2" y="2" width="798" height="478" stroke-width="1" stroke="black" />'
+        ref_box = '<rect x="2" y="2" width="798" height="478" fill="none" stroke-width="1" stroke="black" />'
         color_style = """
             .color-black {
                 fill: black;
@@ -178,7 +178,7 @@ def renderGraphic (data, color=None):
                 fill: none;
             }"""
     else:
-        ref_box = '<rect x="2" y="2" width="798" height="478" stroke-width="1" stroke="black" />'
+        ref_box = '<rect x="2" y="2" width="798" height="478" fill="none" stroke-width="1" stroke="black" />'
         color_style = """
             .color-black {
                 fill: black;
