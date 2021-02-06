@@ -1,8 +1,8 @@
-<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="0" width="800" height="400" fill="white" stroke-width="0" stroke="black" />
+<svg width="800" height="480" viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="2" width="798" height="478" fill="white" stroke-width="1" stroke="black" />
     <style>
         text {
-            font-family: 'DIN Condensed';
+            font-family: monospace;
         }
         .color-black {
             fill: black;
@@ -26,12 +26,12 @@
             34°F 63%
         </text>
     </g>
-    <g transform="translate(20,290)">
+    <g transform="translate(20,390)">
         <text style="font-size: 34px">
             Feels like 27.76°F
         </text>
     </g>
-    <g transform="translate(20,330)">
+    <g transform="translate(20,430)">
         <text style="font-size: 34px">
             Clear throughout the day.
         </text>
