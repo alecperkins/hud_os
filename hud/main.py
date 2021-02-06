@@ -16,11 +16,12 @@ renderer = Renderer(display)
 
 data = None
 with open('./sample-data.json') as f:
-    data = json.load(f)
+    data = json.load(f)['data']
 print('initialized')
 
 while True:
     data['now'] = datetime.now()
     print(data['now'])
     renderer.render(data)
+    print('sleeping...')
     sleep(60)

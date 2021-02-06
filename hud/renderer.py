@@ -27,6 +27,10 @@ class Renderer:
         frame = DisplayFrame(self.display.width, self.display.height)
         graphic_b = renderGraphic(data, 'black')
         graphic_r = renderGraphic(data, 'red')
+        with open('./last_black.svg','w') as f:
+            f.write(graphic_b)
+        with open('./last_red.svg','w') as f:
+            f.write(graphic_r)
         frame.drawBlack(graphic_b)
         frame.drawRed(graphic_r)
         self._flush(frame)
@@ -158,7 +162,7 @@ def renderGraphic (data, color=None):
     if color == 'red':
         color_style = """
             .color-black {
-                fill: transparent;
+                fill: none;
             }
             .color-red {
                 fill: black;
@@ -169,7 +173,7 @@ def renderGraphic (data, color=None):
                 fill: black;
             }
             .color-red {
-                fill: transparent;
+                fill: none;
             }"""
     else:
         color_style = """
@@ -179,8 +183,8 @@ def renderGraphic (data, color=None):
             .color-red {
                 fill: red;
             }"""
-    svg_output = f"""<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-    <rect x="0" y="0" width="800" height="400" fill="none" stroke-width="2" stroke="black" />
+    svg_output = f"""<svg width="800" height="480" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+    <rect x="2" y="2" width="798" height="478" fill="white" stroke-width="1" stroke="black" />
     <style>
         text {{
             font-family: monospace;
