@@ -80,8 +80,3 @@ class RaspberryPi:
         self.GPIO.output(self.DC_PIN, 0)
 
         self.GPIO.cleanup()
-
-# implementation = RaspberryPi()
-
-# for func in [x for x in dir(implementation) if not x.startswith('_')]:
-#     setattr(sys.modules[__name__], func, getattr(implementation, func))

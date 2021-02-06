@@ -20,24 +20,26 @@ class Server:
         self._renderer = Renderer()
 
 
+    def tick (self):
+        logging.debug(f'Server fetching')
+        start_t = getNow()
+        data = loadAll()
+        data['now'] = start_t.astimezone(pytz.timezone(settings.DISPLAY_TZ))
+        logging.debug(data['now'])
 
+        logging.debug(f'Server displaying')
+        self._renderer.render(data)
+        end_t = getNow()
+        work_seconds = (end_t - start_t).total_seconds()
+        return work_seconds
 
     def start (self):
         while True:
-            logging.debug(f'Server fetching')
-            start_t = getNow()
-            data = loadAll()
-            data['now'] = start_t.astimezone(pytz.timezone(settings.DISPLAY_TZ))
-            logging.debug(data['now'])
+            work_seconds = self.tick()
 
-            logging.debug(f'Server displaying')
-            self._renderer.render(data)
-
-            end_t = getNow()
-            work_seconds = (end_t - start_t).total_seconds()
             sleep_seconds = int(self.tick_s - work_seconds)
             if sleep_seconds < 0:
                 sleep_seconds = 10
             logging.debug(f'Server sleeping for {sleep_seconds}s')
             sleep(sleep_seconds)
-    
+

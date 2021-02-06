@@ -1,0 +1,2 @@
+import hud
+hud.tick()
