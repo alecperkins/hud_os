@@ -2,6 +2,8 @@ import os
 from PIL import Image,ImageDraw,ImageFont
 from cairosvg import svg2png
 import io
+import pytz
+
 class DisplayFrame:
     def __init__ (self, width, height):
         self.black_image = Image.new('1', (width, height), 255)
@@ -139,8 +141,7 @@ def rTrainTimeList (train_times, now):
     </g>"""
 
 def trainTimeStr (train, now):
-    stop_time = datetime.fromtimestamp(train['time']).replace(tzinfo=timezone.utc)
-    stop_time.strftime('')
+    stop_time = datetime.fromtimestamp(train['time']).replace(tzinfo=timezone.utc).astimezone(tz=pytz.timezone('America/New_York'))
     min_until = int((stop_time - now).total_seconds() / 60)
     if min_until < 5:
         return []

@@ -30,4 +30,4 @@ while True:
     print(data['now'])
     renderer.render(data)
     print('sleeping...')
-    sleep(60)
+    sleep(45)
