@@ -87,13 +87,13 @@ def rFeelTemp (t):
         color = 'red'
     return f"""<g transform="translate(20,290)">
         <text class="color-{color}" style="font-size: 34px">
-            Feels like {t}°F
+            Feels like {int(t)}°F
         </text>
     </g>"""
 
 def rWeatherSummary (s):
     return f"""<g transform="translate(20,330)">
-        <text class="color-black" style="font-size: 34px">
+        <text class="color-black" style="font-size: 14px">
             {s}
         </text>
     </g>"""
@@ -142,11 +142,11 @@ def trainTimeStr (train, now):
     stop_time = datetime.fromtimestamp(train['time']).replace(tzinfo=timezone.utc)
     stop_time.strftime('')
     min_until = int((stop_time - now).total_seconds() / 60)
-    if min_until < 0:
+    if min_until < 5:
         return []
     
     color = 'black'
-    if min_until < 10:
+    if min_until < 11:
         color = 'red'
     time_until_str = str(min_until) + 'm'
     stop_time_str = stop_time.strftime('%-H:%M')
@@ -169,7 +169,7 @@ def renderGraphic (data, color=None):
                 fill: black;
             }"""
     elif color == 'black':
-        ref_box = '<rect x="2" y="2" width="798" height="478" fill="white" stroke-width="1" stroke="black" />'
+        ref_box = '<rect x="2" y="2" width="798" height="478" stroke-width="1" stroke="black" />'
         color_style = """
             .color-black {
                 fill: black;
@@ -178,7 +178,7 @@ def renderGraphic (data, color=None):
                 fill: none;
             }"""
     else:
-        ref_box = '<rect x="2" y="2" width="798" height="478" fill="white" stroke-width="1" stroke="black" />'
+        ref_box = '<rect x="2" y="2" width="798" height="478" stroke-width="1" stroke="black" />'
         color_style = """
             .color-black {
                 fill: black;
@@ -187,6 +187,7 @@ def renderGraphic (data, color=None):
                 fill: red;
             }"""
     svg_output = f"""<svg width="800" height="480" viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="800" height="480" fill="white" stroke="none" />' 
     { ref_box }
     <style>
         text {{
