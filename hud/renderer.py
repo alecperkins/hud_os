@@ -160,6 +160,7 @@ def rTrainLineStatus (statuses):
 
 def renderGraphic (data, color=None):
     if color == 'red':
+        ref_box = ''
         color_style = """
             .color-black {
                 fill: none;
@@ -168,6 +169,7 @@ def renderGraphic (data, color=None):
                 fill: black;
             }"""
     elif color == 'black':
+        ref_box = '<rect x="2" y="2" width="798" height="478" fill="white" stroke-width="1" stroke="black" />'
         color_style = """
             .color-black {
                 fill: black;
@@ -176,6 +178,7 @@ def renderGraphic (data, color=None):
                 fill: none;
             }"""
     else:
+        ref_box = '<rect x="2" y="2" width="798" height="478" fill="white" stroke-width="1" stroke="black" />'
         color_style = """
             .color-black {
                 fill: black;
@@ -183,8 +186,8 @@ def renderGraphic (data, color=None):
             .color-red {
                 fill: red;
             }"""
-    svg_output = f"""<svg width="800" height="480" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-    <rect x="2" y="2" width="798" height="478" fill="white" stroke-width="1" stroke="black" />
+    svg_output = f"""<svg width="800" height="480" viewBox="0 0 800 480" xmlns="http://www.w3.org/2000/svg">
+    { ref_box }
     <style>
         text {{
             font-family: monospace;
