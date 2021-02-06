@@ -1,0 +1,73 @@
+<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+    <rect x="0" y="0" width="800" height="400" fill="white" stroke-width="0" stroke="black" />
+    <style>
+        text {
+            font-family: 'DIN Condensed';
+        }
+        .color-black {
+            fill: black;
+        }
+        .color-red {
+            fill: red;
+        }
+    </style>
+    <g transform="translate(20,70)">
+        <text style="font-size: 68px">
+            Feb 5
+        </text>
+    </g>
+    <g transform="translate(20,180)">
+        <text style="font-size: 128px;">
+            23:09
+        </text>
+    </g>
+    <g transform="translate(20,250)">
+        <text style="font-size: 68px">
+            34°F 63%
+        </text>
+    </g>
+    <g transform="translate(20,290)">
+        <text style="font-size: 34px">
+            Feels like 27.76°F
+        </text>
+    </g>
+    <g transform="translate(20,330)">
+        <text style="font-size: 34px">
+            Clear throughout the day.
+        </text>
+    </g>
+    
+    <g transform="translate(400,20)">
+        <g transform="translate(0,40)">
+            <text class="color-red" style="font-size: 34px">
+                (D) in 7m at 23:16
+            </text>
+        </g>
+
+        <g transform="translate(0,80)">
+            <text class="color-black" style="font-size: 34px">
+                (3) in 13m at 23:22
+            </text>
+        </g>
+
+        <g transform="translate(0,110)">
+            <text class="color-black" style="font-size: 24px">
+                (A) in 14m at 23:24
+            </text>
+        </g>
+
+        <g transform="translate(0,130)">
+            <text class="color-black" style="font-size: 24px">
+                (D) in 20m at 23:30
+            </text>
+        </g>
+
+        <g transform="translate(0,160)">
+            <text class="color-black" style="font-size: 24px">
+                (A) in 32m at 23:42
+            </text>
+        </g>
+
+    </g>
+    
+</svg>
