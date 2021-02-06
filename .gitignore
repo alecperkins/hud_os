@@ -1,5 +1,6 @@
 .DS_Store
 .env
-.datacache/
+.cache/
 __pycache__/
 *.pyc
+debug-graphic.svg
