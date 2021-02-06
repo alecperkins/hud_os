@@ -44,7 +44,7 @@ class Renderer:
         self.display.sleep()
 
 from collections import defaultdict
-from datetime import datetime
+from datetime import datetime, timezone
 # <rect fill="#fff" stroke="#000" x="-70" y="-70" width="390" height="390"/>
 # <g opacity="0.8">
 # 	<rect x="25" y="25" width="200" height="200" fill="green" stroke-width="4" stroke="pink" />
@@ -139,7 +139,7 @@ def rTrainTimeList (train_times, now):
     </g>"""
 
 def trainTimeStr (train, now):
-    stop_time = datetime.fromtimestamp(train['time'])
+    stop_time = datetime.fromtimestamp(train['time']).replace(tzinfo=timezone.utc)
     stop_time.strftime('')
     min_until = int((stop_time - now).total_seconds() / 60)
     if min_until < 0:
