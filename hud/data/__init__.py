@@ -39,9 +39,9 @@ def loadAll():
 
     data = {}
     data['forecast'] = _loadCacheable('forecast', fetchForecast, max_age_s=(60 * 5))
-    data['sun'] = _loadCacheable('sun', fetchSun, max_age_s=(60 * 60 * 1))
-    data['subway_realtime'] = _loadCacheable('subway_realtime', fetchNYCSubwayRealTime, max_age_s=(60 * 0.75))
-    data['subway_status'] = _loadCacheable('subway_status', fetchNYCSubwayStatus, max_age_s=(60 * 5))
+    data['sun'] = _loadCacheable('sun', fetchSun, max_age_s=60)
+    # data['subway_realtime'] = _loadCacheable('subway_realtime', fetchNYCSubwayRealTime, max_age_s=(60 * 0.75))
+    # data['subway_status'] = _loadCacheable('subway_status', fetchNYCSubwayStatus, max_age_s=(60 * 5))
 
     end_t = getNow()
     logging.debug(f'loadAll.success timestamp={end_t.isoformat()} duration_s={(end_t - start_t).total_seconds()}')

@@ -9,14 +9,25 @@ def rDate (dt):
         color = 'red'
     return f"""<g transform="translate(20,70)">
         <text class="color-{color}" style="font-size: 68px">
-            {dt.strftime('%b %-d')}
+            {dt.strftime('%b %-d')}, {dt.strftime('%-Ip')}
         </text>
     </g>"""
 
 def rTime (dt):
+    # TODO: quarter filled circle
     return f"""<g transform="translate(20,180)">
         <text class="color-black" style="font-size: 128px;">
-            {dt.strftime('%-H:%M')}
+            
+        </text>
+    </g>"""
+
+def rSunrise (sun, now):
+    if not sun or not sun.get('next'):
+        return ''
+    hours_until = int((datetime.fromisoformat(sun['time']) - now).total_seconds() / (60 * 60))
+    return f"""<g transform="translate(20,120)">
+        <text class="color-black" style="font-size: 34px;">
+            {sun['next'].capitalize()} in {hours_until} hours
         </text>
     </g>"""
 
@@ -24,8 +35,8 @@ def rAirTemp (t, h):
     color = 'black'
     if t < 33 or t > 89 or h >= 0.8:
         color = 'red'
-    return f"""<g transform="translate(20,250)">
-        <text class="color-{color}" style="font-size: 68px">
+    return f"""<g transform="translate(20,240)">
+        <text class="color-{color}" style="font-size: 138px">
             {int(t)}°F {int(h*100)}%
         </text>
     </g>"""
@@ -34,15 +45,15 @@ def rFeelTemp (t):
     color = 'black'
     if t < 33 or t > 89:
         color = 'red'
-    return f"""<g transform="translate(20,290)">
-        <text class="color-{color}" style="font-size: 34px">
+    return f"""<g transform="translate(20,300)">
+        <text class="color-{color}" style="font-size: 54px">
             Feels like {int(t)}°F
         </text>
     </g>"""
 
 def rWeatherSummary (s):
-    return f"""<g transform="translate(20,330)">
-        <text class="color-black" style="font-size: 14px">
+    return f"""<g transform="translate(20,340)">
+        <text class="color-black" style="font-size: 24px">
             {s}
         </text>
     </g>"""
@@ -150,8 +161,9 @@ def generateGraphic (data, color=None):
     {rAirTemp(data['forecast']['current_temp_f'], data['forecast']['humidity'])}
     {rFeelTemp(data['forecast']['feel_temp_f'])}
     {rWeatherSummary(data['forecast']['summary'])}
-    {rTrainTimeList(data['subway_realtime'], data['now'])}
-    {rTrainLineStatus(data['subway_status'])}
+    {rSunrise(data['sun'], data['now'])}
+    {rTrainTimeList(data.get('subway_realtime',[]), data['now'])}
+    {rTrainLineStatus(data.get('subway_status',[]))}
 </svg>
 """
     return svg_output

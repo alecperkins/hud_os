@@ -23,7 +23,7 @@ class DisplayFrame:
     def drawRed (self, svg_str):
         self._applySVG(self.red_image, svg_str)
 
-
+LAST_BLACK_GRAPHIC_FILEPATH = os.path.join(os.getcwd(), '.cache/last_black.svg')
 class Renderer:
     def __init__ (self):
         driver = RaspberryPi()
@@ -32,14 +32,21 @@ class Renderer:
     def render (self, data):
         frame = DisplayFrame(self.display.width, self.display.height)
         graphic_b = generateGraphic(data, 'black')
+        last_black_graphic = None
+        try:
+            with open(LAST_BLACK_GRAPHIC_FILEPATH) as f:
+                last_black_graphic = str(f.read())
+        except:
+            pass
+        if last_black_graphic == graphic_b:
+            return
+        
         graphic_r = generateGraphic(data, 'red')
-        # with open('./last_black.svg','w') as f:
-        #     f.write(graphic_b)
-        # with open('./last_red.svg','w') as f:
-        #     f.write(graphic_r)
         frame.drawBlack(graphic_b)
         frame.drawRed(graphic_r)
         self._flush(frame)
+        with open(LAST_BLACK_GRAPHIC_FILEPATH, 'w') as f:
+            f.write(graphic_b)
 
     def _flush (self, frame):
         self.display.init()
