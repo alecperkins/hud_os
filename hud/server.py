@@ -1,3 +1,4 @@
+import os
 import pytz
 import logging
 from .data import loadAll
@@ -31,6 +32,8 @@ class Server:
         self._renderer.render(data)
         end_t = getNow()
         work_seconds = (end_t - start_t).total_seconds()
+        with open(os.path.join(os.getcwd(), '.cache/last_tick.json'),'w') as f:
+            f.write(f'"{getNow().isoformat()}"')
         return work_seconds
 
     def start (self):
