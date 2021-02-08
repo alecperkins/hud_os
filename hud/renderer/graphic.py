@@ -9,7 +9,7 @@ def rDate (dt):
         color = 'red'
     return f"""<g transform="translate(20,70)">
         <text class="color-{color}" style="font-size: 68px">
-            {dt.strftime('%b %-d')}, {dt.strftime('%-Ip')}
+            {dt.strftime('%b %-d')}, {dt.strftime('%-I%p')}
         </text>
     </g>"""
 
