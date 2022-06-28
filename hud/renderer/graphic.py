@@ -65,7 +65,7 @@ def rTrainTimeList (train_times, now):
     while len(train_times) < 5:
         train_times.append(['','black'])
     return f"""
-    <g transform="translate(400,20)">
+    <g transform="translate(20,360)">
         <g transform="translate(0,40)">
             <text class="color-{train_times[0][1]}" style="font-size: 34px">
                 {train_times[0][0]}
@@ -77,20 +77,22 @@ def rTrainTimeList (train_times, now):
                 {train_times[1][0]}
             </text>
         </g>
+    </g>
+    <g transform="translate(420,360)">
 
-        <g transform="translate(0,110)">
+        <g transform="translate(0,40)">
             <text class="color-{train_times[2][1]}" style="font-size: 24px">
                 {train_times[2][0]}
             </text>
         </g>
 
-        <g transform="translate(0,130)">
+        <g transform="translate(0,60)">
             <text class="color-{train_times[3][1]}" style="font-size: 24px">
                 {train_times[3][0]}
             </text>
         </g>
 
-        <g transform="translate(0,160)">
+        <g transform="translate(0,80)">
             <text class="color-{train_times[4][1]}" style="font-size: 24px">
                 {train_times[4][0]}
             </text>
