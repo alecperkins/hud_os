@@ -1,9 +1,9 @@
 import logging
 
-from .server import Server
+from .controller import HUDController
 
 def start ():
-    Server(tick_s=60).start()
+    HUDController(tick_s=60).start()
 
 def tick ():
-    Server(tick_s=60).tick()
+    HUDController(tick_s=60).tick()

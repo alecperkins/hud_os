@@ -153,7 +153,7 @@ class EPD:
         self.send_command(0x12)
         self.driver.delay_ms(100)
         self.ReadBusy()
-        
+
     def clear(self):
         self.send_command(0x10) # Data Stop
         for i in range(0, int(self.width * self.height / 8)):
@@ -176,5 +176,58 @@ class EPD:
         
     def dev_exit(self):
         self.driver.module_exit()
+
+    def alt_get_frame_buffer(self, image):
+        buf = [0x00] * (self.width * self.height // 4)
+        # Set buffer to value of Python Imaging Library image.
+        # Image must be in mode L.
+        image_grayscale = image.convert('L')
+        imwidth, imheight = image_grayscale.size
+        if imwidth != self.width or imheight != self.height:
+            raise ValueError('Image must be same dimensions as display \
+                ({0}x{1}).' .format(self.width, self.height))
+
+        pixels = image_grayscale.load()
+        for y in range(self.height):
+            for x in range(self.width):
+                # Set the bits for the column of pixels at the current position.
+                if pixels[x, y] < 64:           # black
+                    buf[(x + y * self.width) // 4] &= ~(0xC0 >> (x % 4 * 2))
+                elif pixels[x, y] < 192:     # convert gray to red
+                    buf[(x + y * self.width) // 4] &= ~(0xC0 >> (x % 4 * 2))
+                    buf[(x + y * self.width) // 4] |= 0x40 >> (x % 4 * 2)
+                else:                           # white
+                    buf[(x + y * self.width) // 4] |= 0xC0 >> (x % 4 * 2)
+        return buf
+
+    def alt_show(self, image):
+        frame_buffer = self.alt_get_frame_buffer(image)
+        self.send_command(0x10)
+        for i in range(0, self.width // 4 * self.height):
+            temp1 = frame_buffer[i]
+            j = 0
+            while (j < 4):
+                if ((temp1 & 0xC0) == 0xC0):
+                    temp2 = 0x03
+                elif ((temp1 & 0xC0) == 0x00):
+                    temp2 = 0x00
+                else:
+                    temp2 = 0x04
+                temp2 = (temp2 << 4) & 0xFF
+                temp1 = (temp1 << 2) & 0xFF
+                j += 1
+                if((temp1 & 0xC0) == 0xC0):
+                    temp2 |= 0x03
+                elif ((temp1 & 0xC0) == 0x00):
+                    temp2 |= 0x00
+                else:
+                    temp2 |= 0x04
+                temp1 = (temp1 << 2) & 0xFF
+                self.send_data(temp2)
+                j += 1
+        self.send_command(0x12)
+        self.driver.delay_ms(100)
+        self.ReadBusy()
+
 
 

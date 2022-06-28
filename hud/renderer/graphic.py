@@ -59,9 +59,7 @@ def rWeatherSummary (s):
     </g>"""
 
 def rTrainTimeList (train_times, now):
-    print(train_times)
     train_times = sorted(train_times, key=lambda x: x['time'])[0:5]
-    print(train_times)
     train_times = [trainTimeStr(t,now) for t in train_times]
     train_times = list(filter(lambda x: x, train_times))
     while len(train_times) < 5:

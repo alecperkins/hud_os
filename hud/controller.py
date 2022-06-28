@@ -7,7 +7,7 @@ from time import sleep
 
 from hud import settings
 
-class Server:
+class HUDController:
     def __init__ (self, tick_s=60, display_mode=None):
         logging.debug(f'Server init tick_s={tick_s}')
         self.tick_s = tick_s
@@ -45,4 +45,9 @@ class Server:
                 sleep_seconds = 10
             logging.debug(f'Server sleeping for {sleep_seconds}s')
             sleep(sleep_seconds)
+
+class DebugServer:
+    def __init__(self):
+        pass
+    # serve .cache/last_black.svg and .cache/last_red.svg
 
