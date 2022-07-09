@@ -114,6 +114,26 @@ def rTrainTimeList (train_times, train_statuses, now):
 
     </g>"""
 
+def rCitiBike(station_status):
+    total_available = station_status.get('num_bikes_available', 0)
+    ebikes_available = station_status.get('num_ebikes_available', 0)
+    station_status_str = str(total_available) + ' (E:' + str(ebikes_available) + ')'
+    return f"""
+    <g transform="translate(440,360)">
+
+        <g transform="translate(0,40)">
+        </g>
+
+        <g transform="translate(0,60)">
+        </g>
+
+        <g transform="translate(0,80)">
+            <text style="font-size: 24px">CitiBike: {station_status_str}</text>
+        </g>
+
+    </g>
+    """
+
 def trainTimeStr (train, now):
     stop_time = datetime.fromisoformat(train['time'])
     min_until = int((stop_time - now).total_seconds() / 60)
@@ -172,6 +192,7 @@ def generateGraphic (data, color=None):
     {rWeatherSummary(data['forecast']['summary'])}
     {rSunrise(data['sun'], data['now'])}
     {rTrainTimeList(data.get('subway_realtime',[]), data.get('subway_status', []), data['now'])}
+    {rCitiBike(data.get('citibike'))}
 </svg>
 """
     return svg_output

@@ -1,6 +1,8 @@
 import logging
 import os
 import json
+
+from .citibike import fetchCitibike
 from .helpers import getNow
 from .sun import fetchSun
 from .forecast import fetchForecast
@@ -42,6 +44,7 @@ def loadAll():
     data['sun'] = _loadCacheable('sun', fetchSun, max_age_s=60)
     data['subway_realtime'] = _loadCacheable('subway_realtime', fetchNYCSubwayRealTime, max_age_s=(60 * 0.75))
     data['subway_status'] = _loadCacheable('subway_status', fetchNYCSubwayStatus, max_age_s=(60 * 5))
+    data['citibike'] = _loadCacheable('citibike', fetchCitibike, max_age_s=(60 * 0.75))
 
     end_t = getNow()
     logging.debug(f'loadAll.success timestamp={end_t.isoformat()} duration_s={(end_t - start_t).total_seconds()}')
