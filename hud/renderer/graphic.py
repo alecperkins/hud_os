@@ -58,44 +58,58 @@ def rWeatherSummary (s):
         </text>
     </g>"""
 
-def rTrainTimeList (train_times, now):
-    train_times = sorted(train_times, key=lambda x: x['time'])[0:5]
-    train_times = [trainTimeStr(t,now) for t in train_times]
-    train_times = list(filter(lambda x: x, train_times))
-    while len(train_times) < 5:
-        train_times.append(['','black'])
+def rTrainTimeList (train_times, train_statuses, now):
+    lines = {
+        '3': ['','black'],
+        'A': ['','black'],
+        'D': ['','black'],
+    }
+    print(1, train_times)
+    train_times = sorted(train_times, key=lambda x: x['time'])
+    print(2, train_times)
+    for t in train_times:
+        line_name = t['line']
+        print(line_name, lines.get(line_name))
+        if line_name in lines and not lines[line_name][0]:
+            time_info = trainTimeStr(t,now)
+            if time_info[0]:
+                lines[line_name] = time_info
+    for status in train_statuses:
+        line_name = status['line']
+        if line_name in lines and not lines[line_name][0]:
+            lines[line_name] = [status['summary'],'red']
+
+    # train_times = [trainTimeStr(t,now) for t in train_times]
+    # train_times = list(filter(lambda x: x, train_times))
+    # print(3, train_times)
+    # while len(train_times) < 5:
+    #     train_times.append(['','black'])
     return f"""
     <g transform="translate(20,360)">
         <g transform="translate(0,40)">
-            <text class="color-{train_times[0][1]}" style="font-size: 34px">
-                {train_times[0][0]}
+            <text class="color-{lines['3'][1]}" style="font-size: 34px">
+                (3) {lines['3'][0]}
             </text>
         </g>
 
         <g transform="translate(0,80)">
-            <text class="color-{train_times[1][1]}" style="font-size: 34px">
-                {train_times[1][0]}
+            <text class="color-{lines['A'][1]}" style="font-size: 34px">
+                (A) {lines['A'][0]}
             </text>
         </g>
     </g>
-    <g transform="translate(420,360)">
+    <g transform="translate(440,360)">
 
         <g transform="translate(0,40)">
-            <text class="color-{train_times[2][1]}" style="font-size: 24px">
-                {train_times[2][0]}
+            <text class="color-{lines['D'][1]}" style="font-size: 24px">
+                (D) {lines['D'][0]}
             </text>
         </g>
 
         <g transform="translate(0,60)">
-            <text class="color-{train_times[3][1]}" style="font-size: 24px">
-                {train_times[3][0]}
-            </text>
         </g>
 
         <g transform="translate(0,80)">
-            <text class="color-{train_times[4][1]}" style="font-size: 24px">
-                {train_times[4][0]}
-            </text>
         </g>
 
     </g>"""
@@ -105,19 +119,14 @@ def trainTimeStr (train, now):
     min_until = int((stop_time - now).total_seconds() / 60)
     print(now, stop_time, min_until)
     if min_until < 5:
-        return []
+        return ['','black']
     color = 'black'
     if min_until < 11:
         color = 'red'
     time_until_str = str(min_until) + 'm'
     stop_time_str = stop_time.astimezone(pytz.timezone(settings.DISPLAY_TZ)).strftime('%-H:%M')
-    return [f"""({train['line']}) in {time_until_str} at {stop_time_str}""",color]
+    return [f"""in {time_until_str} at {stop_time_str}""",color]
 
-def rTrainLineStatus (statuses):
-    status_by_line = defaultdict(set)
-    for status in statuses:
-        status_by_line[status['line']].add(status['summary'])
-    return ''.join([])
 
 def generateGraphic (data, color=None):
     if color == 'red':
@@ -162,8 +171,7 @@ def generateGraphic (data, color=None):
     {rFeelTemp(data['forecast']['feel_temp_f'])}
     {rWeatherSummary(data['forecast']['summary'])}
     {rSunrise(data['sun'], data['now'])}
-    {rTrainTimeList(data.get('subway_realtime',[]), data['now'])}
-    {rTrainLineStatus(data.get('subway_status',[]))}
+    {rTrainTimeList(data.get('subway_realtime',[]), data.get('subway_status', []), data['now'])}
 </svg>
 """
     return svg_output
