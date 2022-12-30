@@ -3,6 +3,7 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 
+WEATHERKIT_TOKEN        = os.environ.get('WEATHERKIT_TOKEN')
 DARKSKY_API_KEY         = os.environ.get('DARKSKY_API_KEY')
 DISPLAY_TZ              = os.environ.get('DISPLAY_TZ', 'UTC')
 LATITUDE                = os.environ.get('LATITUDE', 0)
